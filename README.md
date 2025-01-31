@@ -1,11 +1,11 @@
-# This repository is a part of the course **‘M. Grum: Advanced AI-based Application Systems’**.
+## This repository is a part of the course **‘M. Grum: Advanced AI-based Application Systems’**.
 
-# Project Team Members:
+### Project Team Members:
 
 - Emmanuel Barshan Gomes
 - Md Ataur Rahman
 
-# Dataset used: Air Quality Dataset UCI
+### Dataset used: Air Quality Dataset UCI
 
 > Dataset Link: (https://archive.ics.uci.edu/dataset/360/air+quality)
 

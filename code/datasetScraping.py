@@ -8,7 +8,7 @@ def scrapeDataset(github_url,filename,folder_path):
           response = requests.get(github_url)
 
           file_path = os.path.join(folder_path, filename).replace("\\", "/")
-          print(file_path)
+          #print(file_path)
           if response.status_code == 200:
                with open(file_path, "wb") as file:
                     file.write(response.content)

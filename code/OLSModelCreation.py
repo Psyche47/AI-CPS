@@ -1,5 +1,6 @@
 import pandas as pd
 import statsmodels.api as sm
+import pickle 
 
 df = pd.read_csv("data/training_data.csv")
 #print(df.head())
@@ -15,3 +16,9 @@ X = sm.add_constant(X)
 ols_model = sm.OLS(Y, X).fit()
 
 print(ols_model.summary())
+
+# Saving the OLS model to a file
+file_path = "data/currentOlsSolution.pkl"
+
+with open(file_path, "wb") as file:
+    pickle.dump(ols_model, file)

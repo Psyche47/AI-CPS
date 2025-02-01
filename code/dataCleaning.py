@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.preprocessing import StandardScaler
 
 df = pd.read_csv("data/AirQualityUCI.csv")
 
@@ -11,8 +12,6 @@ df.drop(columns=["Unnamed: 15", "Unnamed: 16"], axis= 1, inplace=True)
 # Replacing -200 with NaN values in the dataset
 df.replace(to_replace=-200, value=np.nan, inplace=True)
 
-df['Date'] = pd.to_datetime(df['Date'],dayfirst=True) 
-
 # print(df.describe())
 
 print("The column NMHC(GT) has", df['NMHC(GT)'].isnull().sum(), "null values.")
@@ -20,11 +19,15 @@ print("The column NMHC(GT) has", df['NMHC(GT)'].isnull().sum(), "null values.")
 # Dropped NMHC(GT) because it has 8557 null values
 df.drop(columns="NMHC(GT)", axis= 1, inplace=True)
 print(df.info())
-print(df.isnull().sum())
+
+
+# Removing duplicate values in the dataset
+print("Number of duplicate Rows: ", df.duplicated().sum())
+df.drop_duplicates(inplace=True,ignore_index=True)
 # print("The null values in the column are", df["CO(GT)"].isnull().sum())
+print(df.isnull().sum())
 missing_percentage = (df.isna().sum()/len(df)) * 100
 print(missing_percentage)
-print(len(df))
 
 # Filling missing values in each column
 for column in df.columns:
@@ -73,8 +76,32 @@ df_post_iqr = remove_outliers_iqr(df, numerical_columns)
 
 print("Shape of the Dataframe pre IQR:", df.shape)
 print("Shape of the Dataframe pre IQR: ", df_post_iqr.shape)
-# df.to_csv("data/cleaned2.csv", index=False, header=True)
-sns.boxplot(df_post_iqr)
-plt.xticks(rotation=45)
-plt.title('Box Plot of the sensor data')
-plt.show()
+
+
+print(df_post_iqr.duplicated().sum())
+# sns.boxplot(df_post_iqr)
+# plt.xticks(rotation=45)
+# plt.title('Box Plot of the sensor data')
+# plt.show()
+
+print(df_post_iqr.info())
+
+# Algorithmic Standardization of the Dataframe using Z-Score Standardization.
+scaler = StandardScaler()
+df_standardized = df_post_iqr.copy()
+
+df_standardized[numerical_columns] = scaler.fit_transform(df_post_iqr[numerical_columns])
+
+print(df_standardized.describe())
+
+# Plotting the histograms to view the distribution of each column after standardization
+# for column in numerical_columns:
+#     plt.figure(figsize=(8, 5))  
+#     sns.histplot(df_standardized[column], bins=30, kde=True) 
+#     plt.title(f"Distribution of {column}") 
+#     plt.xlabel(column)  
+#     plt.ylabel("Frequency")
+#     plt.show()
+
+# Saving the data to a csv file after cleaning, removing outliers and standardization
+df_standardized.to_csv("data/joint_data_collection.csv", index=False, header=True)

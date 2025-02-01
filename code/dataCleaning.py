@@ -40,9 +40,41 @@ for column in df.columns:
 
 print(df.isnull().sum())
 
-sns.boxplot(df)
+# sns.boxplot(df)
+# plt.xticks(rotation=45)
+# plt.title('Box Plot of the sensor data')
+# plt.show()
+
+numerical_columns = df.select_dtypes(include=['number']).columns
+print(numerical_columns)
+
+# Plotting the histogram to view the distribution of each column
+# for column in numerical_columns:
+#     plt.figure(figsize=(8, 5))  
+#     sns.histplot(df[column], bins=30, kde=True) 
+#     plt.title(f"Distribution of {column}") 
+#     plt.xlabel(column)  
+#     plt.ylabel("Frequency")
+#     plt.show()
+
+# Removing outliers using the IQR (Interquartile Range) Method
+def remove_outliers_iqr(df, columns):
+    copied_df = df.copy()
+    for col in columns:
+        Q1 = df[col].quantile(0.25)
+        Q3 = df[col].quantile(0.75)
+        IQR = Q3 - Q1
+        lower_fence = Q1 - (1.5 * IQR)
+        upper_fence = Q3 + (1.5 * IQR)
+        copied_df = copied_df[(copied_df[col] >= lower_fence) & (copied_df[col] <= upper_fence)]
+    return copied_df
+
+df_post_iqr = remove_outliers_iqr(df, numerical_columns)
+
+print("Shape of the Dataframe pre IQR:", df.shape)
+print("Shape of the Dataframe pre IQR: ", df_post_iqr.shape)
+# df.to_csv("data/cleaned2.csv", index=False, header=True)
+sns.boxplot(df_post_iqr)
 plt.xticks(rotation=45)
 plt.title('Box Plot of the sensor data')
 plt.show()
-
-# df.to_csv("data/cleaned2.csv", index=False, header=True)

@@ -11,6 +11,7 @@ Y_test = df_test["CO(GT)"]
 X_test = df_test.drop(columns=["CO(GT)", "AH", "DayOfWeek", "IsWeekend"])
 X_test = sm.add_constant(X_test)
 
+# Loading the OLS model from the data folder
 with open("data/currentOlsSolution.pkl", "rb") as file:
     OLS_model = pickle.load(file)
 

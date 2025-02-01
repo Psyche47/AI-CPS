@@ -25,6 +25,7 @@ print(df.info())
 print("Number of duplicate Rows: ", df.duplicated().sum())
 df.drop_duplicates(inplace=True,ignore_index=True)
 # print("The null values in the column are", df["CO(GT)"].isnull().sum())
+
 print(df.isnull().sum())
 missing_percentage = (df.isna().sum()/len(df)) * 100
 print(missing_percentage)
@@ -49,7 +50,7 @@ print(df.isnull().sum())
 # plt.show()
 
 numerical_columns = df.select_dtypes(include=['number']).columns
-print(numerical_columns)
+#print(numerical_columns)
 
 # Plotting the histogram to view the distribution of each column
 # for column in numerical_columns:
@@ -75,10 +76,8 @@ def remove_outliers_iqr(df, columns):
 df_post_iqr = remove_outliers_iqr(df, numerical_columns)
 
 print("Shape of the Dataframe pre IQR:", df.shape)
-print("Shape of the Dataframe pre IQR: ", df_post_iqr.shape)
+print("Shape of the Dataframe post IQR: ", df_post_iqr.shape)
 
-
-print(df_post_iqr.duplicated().sum())
 # sns.boxplot(df_post_iqr)
 # plt.xticks(rotation=45)
 # plt.title('Box Plot of the sensor data')
@@ -89,19 +88,25 @@ print(df_post_iqr.info())
 # Algorithmic Standardization of the Dataframe using Z-Score Standardization.
 scaler = StandardScaler()
 df_standardized = df_post_iqr.copy()
-
 df_standardized[numerical_columns] = scaler.fit_transform(df_post_iqr[numerical_columns])
 
-print(df_standardized.describe())
+print(df_standardized.shape)
 
-# Plotting the histograms to view the distribution of each column after standardization
-# for column in numerical_columns:
-#     plt.figure(figsize=(8, 5))  
-#     sns.histplot(df_standardized[column], bins=30, kde=True) 
-#     plt.title(f"Distribution of {column}") 
-#     plt.xlabel(column)  
-#     plt.ylabel("Frequency")
-#     plt.show()
+# Formating the date and time and creating separate columns
+df_standardized['Date'] = pd.to_datetime(df_post_iqr['Date'],dayfirst=True) 
+df_standardized = df_standardized.dropna(subset=['Date', 'Time'])
+df_standardized['Datetime'] = pd.to_datetime(df_standardized['Date'].astype(str) + ' ' + df_standardized['Time'].astype(str), errors='coerce')
+
+# print("Number of NA values", df_post_iqr['Datetime'].isna().sum())
+
+df_standardized['Year'] = df_standardized['Datetime'].dt.year
+df_standardized['Month'] = df_standardized['Datetime'].dt.month
+df_standardized['Day'] = df_standardized['Datetime'].dt.day
+df_standardized['Hour'] = df_standardized['Datetime'].dt.hour
+df_standardized['DayOfWeek'] = df_standardized['Datetime'].dt.dayofweek  # Monday=0, Sunday=6
+df_standardized['IsWeekend'] = df_standardized['DayOfWeek'].apply(lambda x: 1 if x >= 5 else 0)
+df_standardized = df_standardized.drop(columns=['Date', 'Time', 'Datetime'])
+print("Shape after dropping", df_standardized.shape)
 
 # Saving the data to a csv file after cleaning, removing outliers and standardization
 df_standardized.to_csv("data/joint_data_collection.csv", index=False, header=True)

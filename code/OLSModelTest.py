@@ -11,6 +11,7 @@ Y_test = df_test["CO(GT)"]
 X_test = df_test.drop(columns=["CO(GT)", "AH", "DayOfWeek", "IsWeekend"])
 X_test = sm.add_constant(X_test)
 
+
 with open("data/currentOlsSolution.pkl", "rb") as file:
     OLS_model = pickle.load(file)
 
@@ -26,3 +27,4 @@ print("Mean Squared Error (MSE):", mse)
 print("Root Mean Squared Error (RMSE):", rmse)
 
 print("R-squared (R2):", r2)
+

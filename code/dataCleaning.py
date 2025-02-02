@@ -44,10 +44,10 @@ for column in df.columns:
 
 print(df.isnull().sum())
 
-# sns.boxplot(df)
-# plt.xticks(rotation=45)
-# plt.title('Box Plot of the sensor data')
-# plt.show()
+sns.boxplot(df)
+plt.xticks(rotation=45)
+plt.title('Box Plot of the sensor data')
+plt.show()
 
 numerical_columns = df.select_dtypes(include=['number']).columns
 #print(numerical_columns)

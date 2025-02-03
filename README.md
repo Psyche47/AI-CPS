@@ -1,4 +1,6 @@
-## This repository is a part of the course **‘M. Grum: Advanced AI-based Application Systems’**.
+## Air Quality Forecasting: A Study on CO(GT) Prediction Using OLS and ANN
+
+### This repository is a part of the course **‘M. Grum: Advanced AI-based Application Systems’**.
 
 ### Project Team Members:
 
@@ -33,3 +35,14 @@ This dataset can be used exclusively for research purposes. Commercial purposes 
 | T             | Continuous  | Temperature                                                                                             | °C         |
 | RH            | Continuous  | Relative Humidity                                                                                       | %          |
 | AH            | Continuous  | Absolute Humidity                                                                                       |            |
+
+### Project Steps:
+
+1. Collected the dataset from the UCI machine learning repository.
+2. Uploaded it to a public repository, then scraped data from that repository.
+3. Conducted data preprocessing which included identifying and filling the NaN values, algorithmic outlier dropping (IQR) and algorithmic
+   normalization (Z-Score Standardization).
+4. Created an ANN model using TensorFlow and visualized the relevant plots.
+5. Validated the ANN model and analyzed the performance indicators.
+6. Created an OLS model and visualized the relevant plots.
+7. Validated the OLS model and analyzed the performance indicators.

@@ -1,4 +1,4 @@
-from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
@@ -24,10 +24,20 @@ print(Y_predict)
 mse = mean_squared_error(Y_test, Y_predict)
 rmse = np.sqrt(mse)
 r2 = r2_score(Y_test, Y_predict)
+mae = mean_absolute_error(Y_test, Y_predict)
 
 print("Mean Squared Error (MSE):", mse)
 print("Root Mean Squared Error (RMSE):", rmse)
 print("R-squared (R2):", r2)
+print("Mean Absolute Error (MAE)", mae)
+
+performance_indicators = {
+    "Metric": ["Mean Squared Error (MSE)", "Root Mean Squared Error (RMSE)", "R-squared (R2)", "Mean Absolute Error (MAE)"],
+    "Values": [mse, rmse, r2, mae]
+}
+
+performance_df = pd.DataFrame(performance_indicators)
+performance_df.to_csv("data/OLSModelPerformanceMetricsTest.csv", header=True)
 
 residuals = Y_test - Y_predict
 

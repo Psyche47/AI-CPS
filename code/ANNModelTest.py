@@ -33,7 +33,7 @@ performance_indicators = {
 }
 
 performance_df = pd.DataFrame(performance_indicators)
-# performance_df.to_csv("data/ANNModelPerformanceMetricsTest.csv", header=True)
+performance_df.to_csv("data/ANNModelPerformanceMetricsTest.csv", header=True)
 
 # Diagonstic plots
 # Residual plot

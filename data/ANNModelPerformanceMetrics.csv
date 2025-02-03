@@ -1,0 +1,2 @@
+,Final Training Loss (MSE),Final Validation Loss (MSE),Final Training MAE,Final Validation MAE,Total Training Iterations (Epochs)
+ANN Model Performance Indicators,0.4199744760990143,0.4609682857990265,0.48763617873191833,0.5677556395530701,50

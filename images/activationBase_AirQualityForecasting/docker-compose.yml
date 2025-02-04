@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  activation_base:
+    image: activationBase_AirQualityForecasting
+    container_name: activation_base
+    volumes:
+      - ai_system:/tmp
+    command: ["sh", "-c", "ls -l /tmp/activationBase"]
+
+volumes:
+  ai_system:
+    external: false

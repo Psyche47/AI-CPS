@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  learning_base:
+    image: learningBase_AirQualityForecasting
+    container_name: learning_base
+    volumes:
+      - ai_system:/tmp
+    command:
+      [
+        "sh",
+        "-c",
+        "ls -l /tmp/learningBase/train && ls -l /tmp/learningBase/validation",
+      ]
+
+volumes:
+  ai_system:
+    external: false

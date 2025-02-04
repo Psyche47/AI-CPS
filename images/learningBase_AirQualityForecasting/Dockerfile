@@ -1,10 +1,9 @@
-FROM busybox
+FROM busybox:latest
 
 LABEL maintainer="Emmanuel Gomes"
 
 # Creating the directories
-RUN mkdir -p /tmp/learningBase/train/ && 
-    mkdir -p /tmp/learningBase/validation/
+RUN mkdir -p /tmp/learningBase/train/ && mkdir -p /tmp/learningBase/validation/
 
 # Copy the CSV files into the container
 COPY training_data.csv /tmp/learningBase/train/

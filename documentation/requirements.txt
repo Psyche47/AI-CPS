@@ -1,5 +1,6 @@
-requests
 pandas
+python3
+numpy
 matplotlib
 seaborn
 sklearn

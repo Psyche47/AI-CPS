@@ -1,4 +1,4 @@
-FROM busybox
+FROM busybox:latest
 
 LABEL maintainer="Emmanuel Gomes"
 

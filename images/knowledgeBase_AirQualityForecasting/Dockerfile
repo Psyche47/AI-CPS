@@ -10,5 +10,3 @@ COPY currentAiSolution.keras /tmp/knowledgeBase/
 COPY currentOlsSolution.pkl /tmp/knowledgeBase/
 
 COPY README.md /tmp/knowledgeBase/
-
-CMD ["sh"]

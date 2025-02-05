@@ -6,9 +6,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import statsmodels.api as sm
 
-model = tf.keras.models.load_model("data/currentAiSolution.keras")
+model = tf.keras.models.load_model("/tmp/knowledgeBase/currentAiSolution.keras")
 
-df = pd.read_csv("data/test_data.csv")
+df = pd.read_csv("/tmp/activationBase/activation_data.csv")
 # print(df.head())
 
 Y_test = df["CO(GT)"]
@@ -33,7 +33,7 @@ performance_indicators = {
 }
 
 performance_df = pd.DataFrame(performance_indicators)
-performance_df.to_csv("data/ANNModelPerformanceMetricsTest.csv", header=True)
+performance_df.to_csv("/tmp/codeBase/ANNModelPerformanceMetricsTest.csv", header=True)
 
 # Diagonstic plots
 # Residual plot
@@ -42,7 +42,7 @@ sns.residplot(x=Y_pred, y=residuals, lowess=True, line_kws={"color": "red"})
 plt.xlabel("Predicted CO(GT)")
 plt.ylabel("Residuals (Actual - Predicted)")
 plt.title("Residual Plot")
-plt.savefig("documentation/ANNTestingFigures/residual_plot.png", dpi=300, bbox_inches='tight')
+plt.savefig("/tmp/codeBase/residual_plot.png", dpi=300, bbox_inches='tight')
 plt.show()
 
 # Histogram of residuals
@@ -52,13 +52,13 @@ plt.axvline(0, color='r', linestyle="--")
 plt.xlabel("Residuals")
 plt.ylabel("Frequency")
 plt.title("Histogram of Residuals")
-plt.savefig("documentation/ANNTestingFigures/histogram.png", dpi=300, bbox_inches='tight')
+plt.savefig("/tmp/codeBase/histogram.png", dpi=300, bbox_inches='tight')
 plt.show()
 
 # Q-Q Plot
 sm.qqplot(residuals, line='s')
 plt.title("Q-Q Plot of Residuals")
-plt.savefig("documentation/ANNTestingFigures/qq_plot.png", dpi=300, bbox_inches='tight')
+plt.savefig("/tmp/codeBase/qq_plot.png", dpi=300, bbox_inches='tight')
 plt.show()
 
 # Scatter plot
@@ -68,5 +68,5 @@ plt.plot([Y_test.min(), Y_test.max()], [Y_test.min(), Y_test.max()], 'r', linest
 plt.xlabel("Actual CO(GT)")
 plt.ylabel("Predicted CO(GT)")
 plt.title("Actual vs. Predicted Values")
-plt.savefig("documentation/ANNTestingFigures/scatter_plot.png", dpi=300, bbox_inches='tight')
+plt.savefig("/tmp/codeBase/scatter_plot.png", dpi=300, bbox_inches='tight')
 plt.show()

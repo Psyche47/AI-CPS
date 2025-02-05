@@ -10,5 +10,3 @@ COPY activation_data.csv /tmp/activationBase/
 
 # Copy the Readme.md with required documentation
 COPY README.md /tmp/activationBase/
-
-CMD ["sh"]

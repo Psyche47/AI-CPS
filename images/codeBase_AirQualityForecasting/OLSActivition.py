@@ -6,7 +6,7 @@ import pickle
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-df_test = pd.read_csv("data/test_data.csv")
+df_test = pd.read_csv("/tmp/activationBase/activation_data.csv")
 # print(df_test.head())
 
 Y_test = df_test["CO(GT)"]
@@ -15,7 +15,7 @@ X_test = sm.add_constant(X_test)
 
 
 # Loading the OLS model from the data folder
-with open("data/currentOlsSolution.pkl", "rb") as file:
+with open("/tmp/knowledgeBase/currentOlsSolution.pkl", "rb") as file:
     OLS_model = pickle.load(file)
 
 Y_predict = OLS_model.predict(X_test)
@@ -37,7 +37,7 @@ performance_indicators = {
 }
 
 performance_df = pd.DataFrame(performance_indicators)
-performance_df.to_csv("data/OLSModelPerformanceMetricsTest.csv", header=True)
+performance_df.to_csv("/tmp/codeBase/OLSModelPerformanceMetricsTest.csv", header=True)
 
 residuals = Y_test - Y_predict
 
@@ -49,7 +49,7 @@ sns.residplot(x=Y_predict, y=residuals, lowess=True, line_kws={"color": "red"})
 plt.xlabel("Fitted Values (Predictions)")
 plt.ylabel("Residuals")
 plt.title("Residuals vs. Fitted Values")
-plt.savefig("documentation/OLSTestingFigures/residual_plot.png", dpi=300, bbox_inches='tight')
+plt.savefig("/tmp/codeBase/residual_plot_ols.png", dpi=300, bbox_inches='tight')
 plt.show()
 
 # Histogram of Residuals
@@ -57,13 +57,13 @@ plt.figure(figsize=(8, 5))
 sns.histplot(residuals, kde=True, bins=30)
 plt.xlabel("Residuals")
 plt.title("Histogram of Residuals")
-plt.savefig("documentation/OLSTestingFigures/histogram.png", dpi=300, bbox_inches='tight')
+plt.savefig("/tmp/codeBase/histogram_ols.png", dpi=300, bbox_inches='tight')
 plt.show()
 
 # Q-Q Plot
 sm.qqplot(residuals, line='45', fit=True)
 plt.title("Q-Q Plot of Residuals")
-plt.savefig("documentation/OLSTestingFigures/qq_plot.png", dpi=300, bbox_inches='tight')
+plt.savefig("/tmp/codeBase/qq_plot_ols.png", dpi=300, bbox_inches='tight')
 plt.show()
 
 # Scatter Plot
@@ -73,6 +73,6 @@ plt.plot([Y_test.min(), Y_test.max()], [Y_test.min(), Y_test.max()], color="red"
 plt.xlabel("Actual CO(GT) Values")
 plt.ylabel("Predicted CO(GT) Values")
 plt.title("Actual vs. Predicted CO(GT) Values")
-plt.savefig("documentation/OLSTestingFigures/scatter_plot.png", dpi=300, bbox_inches='tight')
+plt.savefig("/tmp/codeBase/scatter_plot_ols.png", dpi=300, bbox_inches='tight')
 plt.show()
 

@@ -1,5 +1,6 @@
 FROM ubuntu:latest
 
+# Create the /tmp/codeBase/ directory
 RUN mkdir -p /tmp/codeBase/
 
 # Install system packages and Python 3
@@ -8,7 +9,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install the Python packages
+# Install Python libraries
 RUN pip3 install --no-cache-dir \
     pandas \
     numpy \
@@ -18,10 +19,7 @@ RUN pip3 install --no-cache-dir \
     statsmodels \
     tensorflow
 
-COPY ANNModelCreation.py /tmp/codeBase/
-COPY ANNModelTest.py /tmp/codeBase/
-COPY OLSModelCreation.py /tmp/codeBase/
-COPY OLSModelTest.py /tmp/codeBase/
+# Copy Python scripts
+COPY ANNActivation.py /tmp/codeBase/
+COPY OLSActivition.py /tmp/codeBase/
 
-
-CMD ["python3"]

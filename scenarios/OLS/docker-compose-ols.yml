@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  knowledge_base:
+    image: emmanuel666/knowledgebase_airqualityforecasting:latest
+    volumes:
+      - ai_system:/tmp
+    command:
+      - sh
+      - "-c"
+      - |
+        rm -rf /tmp/knowledgeBase/ && mkdir -p /tmp/knowledgeBase/ && cp -r /tmp/knowledgeBase/ /tmp/;
+
+  activation_base:
+    image: emmanuel666/activationbase_airqualityforecasting:latest
+    volumes:
+      - ai_system:/tmp
+    command:
+      - sh
+      - "-c"
+      - |
+        rm -rf /tmp/activationBase/ && mkdir -p /tmp/activationBase/ && cp -r /tmp/activationBase/ /tmp/;
+
+  code_base:
+    image: emmanuel666/codebase_airqualityforecasting:latest
+    volumes:
+      - ai_system:/tmp
+    depends_on:
+      - "knowledge_base"
+      - "activation_base"
+    command:
+      - sh
+      - "-c"
+      - |
+        rm -rf /tmp/codeBase/ && mkdir -p /tmp/codeBase/ && cp -r /tmp/activationBase/ /tmp/codeBase/;
+        python3 /tmp/codeBase/OLSActivation.py;
+
+volumes:
+  ai_system:
+    external: true
